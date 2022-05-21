@@ -49,7 +49,7 @@ You can deploy this bot anywhere.
 
 <details><summary>Deploy to Heroku</summary>
 <p>
-<br>
+<br
 <a 
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?template=https://github.com/saifalisew1508/IMDbBot)
@@ -61,13 +61,10 @@ You can deploy this bot anywhere.
 </details>
 
 <details>
-  <summary><b>Deploy to Railway</b></summary>
+  <summary>Deploy to Railway</summary>
 <br/>
 
-<p align="left">
-<a href="https://railway.app/new/template?template=https%3A%2F%2Fgithub.com%2Fjosprojects%2Ftgmoviebot"
-">
-     <img height="30px" src="https://railway.app/button.svg">
+[![Deploy+on+Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/saifalisew1508/MembersAdderBot&envs=API_ID,API_HASH,BOT_TOKEN)
   </a>
 </p>
 <a href="https://youtu.be/h6PtzFYaMxQ"><img src="https://img.shields.io/badge/How%20to%20Deploy%20on%20Railway-blue.svg?logo=Youtube"></a>
@@ -79,13 +76,15 @@ You can deploy this bot anywhere.
 
 <details><summary>Deploy to VPS</summary>
 <p>
-<pre>
+
+```
 git clone https://github.com/josprojects/tgmoviebot
 # Install Packages
 pip3 install -r requirements.txt
 Edit info.py with variables as given below then run bot
 python3 bot.py
-</pre>
+```
+
 </p>
 </details>
 
