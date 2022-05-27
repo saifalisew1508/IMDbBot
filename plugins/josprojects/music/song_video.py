@@ -40,17 +40,15 @@ def time_to_seconds(time):
 @Client.on_message(filters.command(["song", "music", "mp3"]) & ~filters.channel & ~filters.edited)
 def a(client, message: Message):
     urlissed = get_text(message)
-    query = ''
     reply_id = message.reply_to_message.message_id if message.reply_to_message else message.message_id
-    for i in message.command[1:]:
-        query += ' ' + str(i)
+    query = ''.join(f' {str(i)}' for i in message.command[1:])
     print(query)
     m = message.reply(f"**🔎 Searching..** `{urlissed}`", reply_to_message_id=reply_id)
     ydl_opts = {"format": "bestaudio[ext=m4a]"}
     try:
         results = []
         count = 0
-        while len(results) == 0 and count < 6:
+        while not results and count < 6:
             if count>0:
                 time.sleep(1)
             results = YoutubeSearch(query, max_results=1).to_dict()
@@ -69,7 +67,7 @@ def a(client, message: Message):
             #     m.edit("Exceeded 30mins cap")
             #     return
 
-            performer = f"[Zaute Km]" 
+            performer = "[Zaute Km]"
             thumb_name = f'thumb{message.message_id}.jpg'
             thumb = requests.get(thumbnail, allow_redirects=True)
             open(thumb_name, 'wb').write(thumb.content)
@@ -82,7 +80,7 @@ def a(client, message: Message):
         m.edit(
             "**Enter Song Name with Command**❗\nFor Example: `/song Alone Marshmellow`"
         )
-        print(str(e))
+        print(e)
         return
     m.edit("`Uploading... Please Wait...`")
     try:
@@ -129,7 +127,7 @@ def humanbytes(size):
     while size > power:
         size /= power
         raised_to_pow += 1
-    return str(round(size, 2)) + " " + dict_power_n[raised_to_pow] + "B"
+    return f"{str(round(size, 2))} {dict_power_n[raised_to_pow]}B"
 
 
 async def progress(current, total, message, start, type_of_ps, file_name=None):
@@ -144,10 +142,11 @@ async def progress(current, total, message, start, type_of_ps, file_name=None):
         time_to_completion = round((total - current) / speed) * 1000
         estimated_total_time = elapsed_time + time_to_completion
         progress_str = "{0}{1} {2}%\n".format(
-            "".join("▣" for i in range(math.floor(percentage / 10))),
-            "".join("□" for i in range(10 - math.floor(percentage / 10))),
+            "".join("▣" for _ in range(math.floor(percentage / 10))),
+            "".join("□" for _ in range(10 - math.floor(percentage / 10))),
             round(percentage, 2),
         )
+
 
         tmp = progress_str + "{0} of {1}\nETA: {2}".format(
             humanbytes(current), humanbytes(total), time_formatter(estimated_total_time)
@@ -201,24 +200,25 @@ def get_readable_time(seconds: int) -> int:
     for x in range(len(time_list)):
         time_list[x] = str(time_list[x]) + time_suffix_list[x]
     if len(time_list) == 4:
-        ping_time += time_list.pop() + ", "
+        ping_time += f"{time_list.pop()}, "
     time_list.reverse()
     ping_time += ":".join(time_list)
     return ping_time
 
 
 def time_formatter(milliseconds: int) -> str:
-    seconds, milliseconds = divmod(int(milliseconds), 1000)
+    seconds, milliseconds = divmod(milliseconds, 1000)
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     tmp = (
-        ((str(days) + " day(s), ") if days else "")
-        + ((str(hours) + " hour(s), ") if hours else "")
-        + ((str(minutes) + " minute(s), ") if minutes else "")
-        + ((str(seconds) + " second(s), ") if seconds else "")
-        + ((str(milliseconds) + " millisecond(s), ") if milliseconds else "")
+        (f"{str(days)} day(s), " if days else "")
+        + (f"{str(hours)} hour(s), " if hours else "")
+        + (f"{str(minutes)} minute(s), " if minutes else "")
+        + (f"{str(seconds)} second(s), " if seconds else "")
+        + (f"{str(milliseconds)} millisecond(s), " if milliseconds else "")
     )
+
     return tmp[:-2]
 
 

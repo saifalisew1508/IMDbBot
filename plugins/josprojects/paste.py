@@ -48,7 +48,7 @@ async def pasty(client, message):
     pablo = await message.reply_text("`Please wait...`")
     tex_t = message.text
     message_s = tex_t
-    if not tex_t:
+    if not message_s:
         if not message.reply_to_message:
             await pablo.edit("`Only text and documents are supported.`")
             return
@@ -57,14 +57,14 @@ async def pasty(client, message):
             m_list = open(file, "r").read()
             message_s = m_list
             os.remove(file)
-        elif message.reply_to_message.text:
+        else:
             message_s = message.reply_to_message.text
-    
+
     ext = "py"
     x = await p_paste(message_s, ext)
     p_link = x["url"]
     p_raw = x["raw"]
-    
+
     pasted = f"**Successfully Paste to Pasty**\n\n**Link:** • [Click here]({p_link})\n\n**Raw Link:** • [Click here]({p_raw})"
     await pablo.edit(pasted, disable_web_page_preview=True)
 

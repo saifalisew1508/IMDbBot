@@ -12,9 +12,7 @@ from plugins.josprojects.help_func.admin_check import admin_check
 
 
 def f_sudo_filter(filt, client, message):
-    return bool(
-        message.from_user.id in ADMINS
-    )
+    return message.from_user.id in ADMINS
 
 
 sudo_filter = filters.create(
@@ -25,9 +23,7 @@ sudo_filter = filters.create(
 
 def onw_filter(filt, client, message):
     if ADMINS:
-        return bool(
-            True # message.from_user.id in ADMINS
-        )
+        return True
     else:
         return bool(
             message.from_user and

@@ -97,23 +97,52 @@ async def next_page(bot, query):
         off_set = offset - 10
     if n_offset == 0:
         btn.append(
-            [InlineKeyboardButton("⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"),
-             InlineKeyboardButton(text=f"Check PM!", url=f"https://t.me/{temp.U_NAME}"),
-             InlineKeyboardButton(f"📃 {round(int(offset) / 10) + 1} / {round(total / 10)}",
-                                  callback_data="pages")]
+            [
+                InlineKeyboardButton(
+                    "⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"
+                ),
+                InlineKeyboardButton(
+                    text="Check PM!", url=f"https://t.me/{temp.U_NAME}"
+                ),
+                InlineKeyboardButton(
+                    f"📃 {round(offset / 10) + 1} / {round(total / 10)}",
+                    callback_data="pages",
+                ),
+            ]
         )
+
     elif off_set is None:
         btn.append(
-            [InlineKeyboardButton(f"🗓 {round(int(offset) / 10) + 1} / {round(total / 10)}", callback_data="pages"),
-             InlineKeyboardButton(text=f"Check PM!", url=f"https://t.me/{temp.U_NAME}"),
-             InlineKeyboardButton("NEXT ⏩", callback_data=f"next_{req}_{key}_{n_offset}")])
+            [
+                InlineKeyboardButton(
+                    f"🗓 {round(offset / 10) + 1} / {round(total / 10)}",
+                    callback_data="pages",
+                ),
+                InlineKeyboardButton(
+                    text="Check PM!", url=f"https://t.me/{temp.U_NAME}"
+                ),
+                InlineKeyboardButton(
+                    "NEXT ⏩", callback_data=f"next_{req}_{key}_{n_offset}"
+                ),
+            ]
+        )
+
     else:
         btn.append(
             [
-                InlineKeyboardButton("⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"),
-                InlineKeyboardButton(f"🗓 {round(int(offset) / 10) + 1} / {round(total / 10)}", callback_data="pages"),
-                InlineKeyboardButton("NEXT ⏩", callback_data=f"next_{req}_{key}_{n_offset}")]
-            )
+                InlineKeyboardButton(
+                    "⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"
+                ),
+                InlineKeyboardButton(
+                    f"🗓 {round(offset / 10) + 1} / {round(total / 10)}",
+                    callback_data="pages",
+                ),
+                InlineKeyboardButton(
+                    "NEXT ⏩", callback_data=f"next_{req}_{key}_{n_offset}"
+                ),
+            ]
+        )
+
     btn.insert(0,
             [
                 InlineKeyboardButton("⭕️ Movie", url="https://t.me/+26XbUS8O3cM1MDU1"),
