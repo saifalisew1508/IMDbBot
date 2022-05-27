@@ -44,10 +44,10 @@ async def torrent(_, message):
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(f"{emoji.CROSS_MARK} Close",
-                                         callback_data="close_data"),
-                    InlineKeyboardButton(f"Next ⏩",
-                                         callback_data="next_tor")
+                    InlineKeyboardButton(
+                        f"{emoji.CROSS_MARK} Close", callback_data="close_data"
+                    ),
+                    InlineKeyboardButton("Next ⏩", callback_data="next_tor"),
                 ]
             ]
         ),
@@ -72,13 +72,11 @@ async def callback_query_next(_, message):
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(f"⏪ Back",
-                                         callback_data="back_tor"),
-                    InlineKeyboardButton(f"{emoji.CROSS_MARK}",
-                                         callback_data="close_data"),
-                    InlineKeyboardButton(f"Next ⏩",
-                                         callback_data="next_tor")
-                    
+                    InlineKeyboardButton("⏪ Back", callback_data="back_tor"),
+                    InlineKeyboardButton(
+                        f"{emoji.CROSS_MARK}", callback_data="close_data"
+                    ),
+                    InlineKeyboardButton("Next ⏩", callback_data="next_tor"),
                 ]
             ]
         ),
@@ -103,12 +101,11 @@ async def callback_query_previous(_, message):
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(f"⏪ Back",
-                                         callback_data="back_tor"),
-                    InlineKeyboardButton(f"{emoji.CROSS_MARK}",
-                                         callback_data="close_data"),
-                    InlineKeyboardButton(f"Next ⏩",
-                                         callback_data="next_tor")
+                    InlineKeyboardButton("⏪ Back", callback_data="back_tor"),
+                    InlineKeyboardButton(
+                        f"{emoji.CROSS_MARK}", callback_data="close_data"
+                    ),
+                    InlineKeyboardButton("Next ⏩", callback_data="next_tor"),
                 ]
             ]
         ),

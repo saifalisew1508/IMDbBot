@@ -22,10 +22,7 @@ async def jsonify(_, message):
     the_real_message = None
     reply_to_id = None
 
-    if message.reply_to_message:
-        the_real_message = message.reply_to_message
-    else:
-        the_real_message = message
+    the_real_message = message.reply_to_message or message
     try:
         pk = InlineKeyboardMarkup(
             [

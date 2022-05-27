@@ -52,9 +52,7 @@ async def get_filters(group_id):
     texts = []
     query = mycol.find()
     try:
-        for file in query:
-            text = file['text']
-            texts.append(text)
+        texts.extend(file['text'] for file in query)
     except:
         pass
     return texts

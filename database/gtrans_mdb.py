@@ -26,18 +26,13 @@ def unset(chat_id):
 	mycol.update_one({"_id":chat_id},{"$set":{"lg_code":None}})
 
 def find(chat_id):
-	id =  {"_id":chat_id}
-	x = mycol.find(id)
-	for i in x:
-             lgcd = i["lg_code"]
-             return lgcd 
+            id =  {"_id":chat_id}
+            x = mycol.find(id)
+            for i in x:
+                        return i["lg_code"] 
 
 def getid():
-    values = []
-    for key  in mycol.find():
-         id = key["_id"]
-         values.append((id)) 
-    return values
+            return [key["_id"] for key in mycol.find()]
 
 def find_one(id):
 	return mycol.find_one({"_id":id})

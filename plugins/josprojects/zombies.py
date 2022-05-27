@@ -19,7 +19,10 @@ def inkick(client, message):
       message.delete()
       count = 0
       for member in client.iter_chat_members(message.chat.id):
-        if member.user.status in input_str and not member.status in ('administrator', 'creator'):
+        if member.user.status in input_str and member.status not in (
+            'administrator',
+            'creator',
+        ):
           try:
             client.kick_chat_member(message.chat.id, member.user.id, int(time() + 45))
             count += 1
@@ -52,7 +55,10 @@ def dkick(client, message):
     message.delete()
     count = 0
     for member in client.iter_chat_members(message.chat.id):
-      if member.user.is_deleted and not member.status in ('administrator', 'creator'):
+      if member.user.is_deleted and member.status not in (
+          'administrator',
+          'creator',
+      ):
         try:
           client.kick_chat_member(message.chat.id, member.user.id, int(time() + 45))
           count += 1
