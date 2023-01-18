@@ -11,13 +11,8 @@ cache_time = 0 if AUTH_USERS or AUTH_CHANNEL else CACHE_TIME
 
 async def inline_users(query: InlineQuery):
     if AUTH_USERS:
-        if query.from_user and query.from_user.id in AUTH_USERS:
-            return True
-        else:
-            return False
-    if query.from_user and query.from_user.id not in temp.BANNED_USERS:
-        return True
-    return False
+        return bool(query.from_user and query.from_user.id in AUTH_USERS)
+    return bool(query.from_user and query.from_user.id not in temp.BANNED_USERS)
 
 @Client.on_inline_query()
 async def answer(bot, query):

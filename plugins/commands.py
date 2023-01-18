@@ -37,7 +37,7 @@ async def start(client, message):
             total=await client.get_chat_members_count(message.chat.id)
             await client.send_message(LOG_CHANNEL, Script.LOG_TEXT_G.format(message.chat.title, message.chat.id, total, "Unknown"))       
             await db.add_chat(message.chat.id, message.chat.title)
-        return 
+        return
     if not await db.is_user_exist(message.from_user.id):
         await db.add_user(message.from_user.id, message.from_user.first_name)
         await client.send_message(LOG_CHANNEL, Script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
@@ -190,10 +190,18 @@ async def start(client, message):
                     file_name = getattr(media, 'file_name', '')
                     f_caption = getattr(msg, 'caption', file_name)
                 try:
-                    await msg.copy(message.chat.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
+                    await msg.copy(
+                        message.chat.id,
+                        caption=f_caption,
+                        protect_content=protect == "/pbatch",
+                    )
                 except FloodWait as e:
                     await asyncio.sleep(e.x)
-                    await msg.copy(message.chat.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
+                    await msg.copy(
+                        message.chat.id,
+                        caption=f_caption,
+                        protect_content=protect == "/pbatch",
+                    )
                 except Exception as e:
                     logger.exception(e)
                     continue
@@ -201,26 +209,26 @@ async def start(client, message):
                 continue
             else:
                 try:
-                    await msg.copy(message.chat.id, protect_content=True if protect == "/pbatch" else False)
+                    await msg.copy(message.chat.id, protect_content=protect == "/pbatch")
                 except FloodWait as e:
                     await asyncio.sleep(e.x)
-                    await msg.copy(message.chat.id, protect_content=True if protect == "/pbatch" else False)
+                    await msg.copy(message.chat.id, protect_content=protect == "/pbatch")
                 except Exception as e:
                     logger.exception(e)
                     continue
-            await asyncio.sleep(1) 
+            await asyncio.sleep(1)
         return await sts.delete()
-        
 
-    files_ = await get_file_details(file_id)           
+
+    files_ = await get_file_details(file_id)
     if not files_:
         pre, file_id = ((base64.urlsafe_b64decode(data + "=" * (-len(data) % 4))).decode("ascii")).split("_", 1)
         try:
             msg = await client.send_cached_media(
                 chat_id=message.from_user.id,
                 file_id=file_id,
-                protect_content=True if pre == 'filep' else False,
-                )
+                protect_content=pre == 'filep',
+            )
             filetype = msg.media
             file = getattr(msg, filetype)
             title = file.file_name
@@ -251,19 +259,23 @@ async def start(client, message):
     buttons = [
         [
             InlineKeyboardButton('⭕️ Support', url='https://t.me/JOSPSupport'),
-            InlineKeyboardButton('Channel ⭕️', url='https://t.me/josprojects/221')
+            InlineKeyboardButton(
+                'Channel ⭕️', url='https://t.me/josprojects/221'
+            ),
         ],
         [
-            InlineKeyboardButton('🎬 Series & Movie Club 🎬', url=f'https://t.me/+y53tWFUw6Q43NzE9')
-        ]
-        ]
+            InlineKeyboardButton(
+                '🎬 Series & Movie Club 🎬', url='https://t.me/+y53tWFUw6Q43NzE9'
+            )
+        ],
+    ]
     await client.send_cached_media(
         chat_id=message.from_user.id,
         file_id=file_id,
         caption=f_caption,
         reply_markup=InlineKeyboardMarkup(buttons),
-        protect_content=True if pre == 'filep' else False,
-        )
+        protect_content=pre == 'filep',
+    )
                     
 
 @Client.on_message(filters.command('channel') & filters.user(ADMINS))

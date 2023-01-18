@@ -95,8 +95,7 @@ async def who_is(client, message):
             )
         except UserNotParticipant:
             pass
-    chat_photo = from_user.photo
-    if chat_photo:
+    if chat_photo := from_user.photo:
         local_user_photo = await client.download_media(
             message=chat_photo.big_file_id
         )
@@ -153,19 +152,18 @@ async def imdb_callback(bot: Client, quer_y: CallbackQuery):
     i, movie = quer_y.data.split('#')
     imdb = await get_poster(query=movie, id=True)
     btn = [
-            [
-                InlineKeyboardButton(
-                    text=f"{imdb.get('title')} - {imdb.get('year')}",
-                    url=imdb['url'],
-                )
-            ],
-            [
-                InlineKeyboardButton(
-                    text=f"Projects Channel",
-                    url="https://t.me/josprojects"
-                )
-            ],
-        ]
+        [
+            InlineKeyboardButton(
+                text=f"{imdb.get('title')} - {imdb.get('year')}",
+                url=imdb['url'],
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text="Projects Channel", url="https://t.me/josprojects"
+            )
+        ],
+    ]
     message = quer_y.message.reply_to_message or quer_y.message
     if imdb:
         caption = IMDB_TEMPLATE.format(

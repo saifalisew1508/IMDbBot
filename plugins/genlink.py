@@ -16,9 +16,7 @@ logger.setLevel(logging.INFO)
 async def allowed(_, __, message):
     if PUBLIC_FILE_STORE:
         return True
-    if message.from_user and message.from_user.id in ADMINS:
-        return True
-    return False
+    return bool(message.from_user and message.from_user.id in ADMINS)
 
 @Client.on_message(filters.command(['link', 'plink']) & filters.create(allowed))
 async def gen_link_s(bot, message):
@@ -49,18 +47,18 @@ async def gen_link_batch(bot, message):
     match = regex.match(first)
     if not match:
         return await message.reply('Invalid link')
-    f_chat_id = match.group(4)
-    f_msg_id = int(match.group(5))
+    f_chat_id = match[4]
+    f_msg_id = int(match[5])
     if f_chat_id.isnumeric():
-        f_chat_id  = int(("-100" + f_chat_id))
+        f_chat_id = int(f"-100{f_chat_id}")
 
     match = regex.match(last)
     if not match:
         return await message.reply('Invalid link')
-    l_chat_id = match.group(4)
-    l_msg_id = int(match.group(5))
+    l_chat_id = match[4]
+    l_msg_id = int(match[5])
     if l_chat_id.isnumeric():
-        l_chat_id  = int(("-100" + l_chat_id))
+        l_chat_id = int(f"-100{l_chat_id}")
 
     if f_chat_id != l_chat_id:
         return await message.reply("Chat ids not matched.")
